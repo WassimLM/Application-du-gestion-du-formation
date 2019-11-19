@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormationController!{% endblock %}
+
+{% block body %}
+<br>
+<h2 style="color:#001A33;">
+    {% if EditMode %}
+        Modifier Formateur
+    {% else %}
+        Création du  Formateur
+    {% endif %}
+</h2>
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Home</a>
+    </li>
+    <li class="breadcrumb-item">Edite formateur</li>
+</ol>
+    {{ form_start(formFormateur) }}
+        {{ form_row(formFormateur.Nom, {'attr' : {'placeholder' :'Entrer Nom du formateur ...'}, 'label' : 'Nom'}) }}
+        {{ form_row(formFormateur.Prenom, {'attr' : {'placeholder' :'Entrer Prenom du formateur ...'}, 'label' : 'Prenom'}) }}
+        {{ form_row(formFormateur.Email, {'attr' : {'placeholder' :'Entrer Email du formateur ...'}, 'label' : 'Email'}) }}
+        {{ form_row(formFormateur.Cin, {'attr' : {'placeholder' :'Entrer Cin du formateur ...'}, 'label' : 'Cin'}) }}
+        {{ form_row(formFormateur.Entreprise, {'attr' : {'placeholder' :'Entrer l\'entreprise du formateur ...'}, 'label' : 'Entreprise'}) }}
+        <button class="btn btn-success" type="Submit">
+            {% if EditMode %}
+                Modifier Formateur
+            {% else %}
+                Ajouter Formateur
+            {% endif %}
+        </button>
+    {{ form_end(formFormateur) }}
+    <br>
+{% endblock %}

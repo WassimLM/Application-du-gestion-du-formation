@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!
+{% endblock %}
+
+{% block body %}
+    <br>
+    <form method="post" action="{{ path('login') }}">
+        <h1 class="h3 mb-3 font-weight-normal" id="loginTitle">Veuillez vous connecter</h1>
+        <br>
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+        <label class="sr-only" for="inputUsername">Email</label>
+        <input type="text" value="{{ last_username }}" name="_username" id="inputUsername" class="form-control" placeholder="Email" required autofocus>
+        <label class="sr-only" for="inputPassword">Password</label>
+        <br>
+        <input class="form-control" id="inputPassword" name="_password" placeholder="Password" required type="password">
+        <br>
+        <a href="{{ path('Inscription') }}">Inscrivez-vous ici</a>
+        <br><br>
+        <button class="btn btn-lg btn-primary" type="submit">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s'identifier&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </button> 
+    </form>
+{% endblock %}
+

@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ContactController!
+{% endblock %}
+
+{% block body %}
+    <h2 style="color:#001A33;">Listes Des message</h2>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Home</a>
+        </li>
+        <li class="breadcrumb-item">Contact</li>
+    </ol>
+    <br>
+<div class="form-group">
+    <input class="form-control" id="search" onChange="search(2)" placeholder="Rechercher par Num Action" style="width:35%;float:right" type="date">
+</div>
+<br>
+<table class="table" id="myTable">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">id</th>
+            <th scope="col">Message</th>
+            <th scope="col">date Message</th>
+            <th scope="col">Réponse</th>
+            <th scope="col">date Reponse</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if is_granted("ROLE_USER") == true %}
+            {% set Messages = UserMessages %}
+        {% elseif is_granted("ROLE_ADMIN") %}
+            {% set Messages = AllMessages %}
+        {% endif %}
+        {% set i=0 %}
+        {% for Message in Messages %}
+            {% set i=i+1 %}
+                <tr>
+                    <th scope="row">{{ i }}</th>
+                    <td>{{ Message.id}}</td>
+                    <td>{{ Message.DemandeMessage }}</td>
+                    <td>{{ Message.DateMessageDemande | date("Y-m-d") }}</td>
+                    <td>
+                        {% if Message.ReponceMessage is  null ==false %}
+                            {{ Message.ReponceMessage }}
+                        {% else %}
+                            <span class="badge badge-info">n'est pas encore saisie</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if Message.DateReponceMessage is  null ==false %}
+                            {{ Message.DateReponceMessage | date("d/m/y")  }}
+                        {% else %}
+                            <span class="badge badge-info">n'est pas encore saisie</span>
+                        {% endif %}  
+                    </td>
+                    <td>
+                        {% if Message.etat ==1 %}
+                            <span class="badge badge-success">En cours</span>
+                        {% else %}
+                            <span class="badge badge-success">Terminer</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <a href="{{ path('suppMessage', {id : Message.id}) }}">
+                                <span class="badge badge-pill badge-danger">Supprimer</span>
+                            </a>
+                            {% if Message.etat == 1 %}
+                                <a href="{{ path('modifMessage', {id : Message.id}) }}">
+                                    <span class="badge badge-pill badge-warning">Répondu</span>
+                                </a>
+                            {% else %}
+                                <a href="{{ path('modifMessage', {id : Message.id}) }}">
+                                    <span class="badge badge-pill badge-info">Modifier</span>
+                                </a>
+                            {% endif %}
+                        {% elseif is_granted("ROLE_USER") %}
+                               {% if Message.etat == 1 %}
+                                    <a href="{{ path('EditContact', {id : Message.id}) }}">
+                                        <span class="badge badge-pill badge-warning">Modifier</span>
+                                    </a>
+                                {% else %}
+                                         <span class="badge badge-pill badge-info">Aucune Action disponible</span>
+                                {% endif %}
+                        {% endif %}
+                    </td>
+                </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br><br><br>
+{% endblock %}

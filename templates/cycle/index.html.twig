@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CycleController!{% endblock %}
+{% form_theme formCycle 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<br>
+<h2 style="color:#001A33;">Création d'un Cycle</h2>
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Home</a>
+    </li>
+    <li class="breadcrumb-item">Edite Cycle</li>
+</ol>
+{{ form_start(formCycle) }}
+{{ form_errors(formCycle) }}
+{{ form_row(formCycle.NumAction, {'attr' : {'placeholder':'Numéro de Cycle'}, 'label' : 'Numéro'}) }}
+{{ form_row(formCycle.CreditImpot, {'label' : 'Crédit d\'impot'}) }}
+{{ form_row(formCycle.DroitTirage, {'label' : 'Droit de Tirage'}) }}
+{{ form_row(formCycle.Article39, {'label' : 'Article 39'}) }}
+{{ form_row(formCycle.theme, {'attr' : {'placeholder':'Théme de Formation'}, 'label' : 'Théme '}) }}
+{{ form_row(formCycle.Mode, {'attr' : {'placeholder':'Mode de Formation'}, 'label' : 'Mode '}) }}
+{{ form_row(formCycle.lieu, {'attr' : {'placeholder':'Lieu de Formation'}, 'label' : 'Lieu'}) }}
+{{ form_row(formCycle.dateDebut, {'label' : 'Date Début de la formation'}) }}
+{{ form_row(formCycle.dateFin, {'label' : 'Date Fin de la formation'}) }}
+{{ form_row(formCycle.Horaire, {'attr' : {'placeholder':'Horaire de la  formation'}, 'label' : 'Horaire '}) }}
+{{ form_row(formCycle.Formateur, {'label' : 'Formateur '}) }}
+<button class="btn btn-success" type="submit">
+    {% if editMode %}
+        Modfier Cycle
+    {% else %}
+        Ajouter Cycle
+    {% endif %}
+</button>
+<br><br>
+{{ form_end(formCycle)}}
+{% endblock %}

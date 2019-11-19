@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ContactController!{% endblock %}
+
+{% block body %}
+<h2 style="color:#001A33;">Contacter L'Administration</h2>
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="#">Home</a>
+    </li>
+    <li class="breadcrumb-item">Contact</li>
+</ol>
+<br>
+{{ form_start(formContact) }}
+    {{ form_row(formContact.DemandeMessage, {"attr" : {"placeholder" : "Ecrivez Votre Message Ici ..", "rows" : 5}}) }}
+    <button type="submit" class="btn btn-primary">
+        {% if ModeForm %}
+            Modifer
+        {% else %}
+            Envoyer
+        {% endif %}
+    </button>
+{{ form_end(formContact) }}
+
+<br><br>
+{% endblock %}

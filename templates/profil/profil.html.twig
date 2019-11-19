@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CycleController!
+{% endblock %}
+
+{% block body %}
+    <br>
+    <h2 style="color:#001A33;">Les cycles de formation</h2>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Home</a>
+        </li>
+            <li class="breadcrumb-item">Liste des formations Exist</li>
+    </ol>
+    <div class="form-group">
+        <input class="form-control" id="search" onkeyup="search(0)" placeholder="Rechercher par Num Action" style="width:35%;float:right" type="text">
+    </div>
+    <br><br>
+    <table class="table" id="myTable">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">NumAction</th>
+                <th scope="col">Authorisation</th>
+                <th scope="col">Théme</th>
+                <th scope="col">Mode</th>
+                <th scope="col">
+                    Formateur
+                </th>
+                <th scope="col">Lieu</th>
+                <th scope="col">Date debut</th>
+                <th scope="col">Date Fin</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set i=0 %}
+            {% for Cycle in Cycles %}
+                {% set i=i+1 %}
+                <tr>
+                    <th scope="row">{{ i }}</th>
+                    <td>{{ Cycle.NumAction }}</td>
+                    <td>
+                        {% if Cycle.CreditImpot %}
+                            <span class="badge badge-pill badge-primary">CreditImpot</span>
+                        {% endif %}
+
+                        {% if Cycle.DroitTirage %}
+                            <span class="badge badge-pill badge-dark">DroitTirage</span>
+                        {% endif %}
+
+                        {% if Cycle.Article39 %}
+                            <span class="badge badge-pill badge-success">Article39</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ Cycle.theme }}</td>
+                    <td>{{ Cycle.Mode }}</td>
+                    <td>{{ Cycle.formateur.Nom }}</td>
+                    <td>{{ Cycle.lieu }}</td>
+                    <td>{{ Cycle.dateDebut | date("m/d/y") }}</td>
+                    <td>{{ Cycle.dateFin | date("m/d/y") }}</td>
+                    <td>
+                        <a href="{{ path('participer', {id : Cycle.id}) }}">
+                            <span class="badge badge-pill badge-info">Participer</span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

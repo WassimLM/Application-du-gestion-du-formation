@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CycleController!
+{% endblock %}
+
+{% block body %}
+    <br>
+    <h2 style="color:#001A33;">Les Formateurs</h2>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item">Formateurs</li>
+    </ol>
+    <div class="form-group">
+        <input class="form-control" id="search" onkeyup="search(0)" placeholder="Rechercher par Nom" style="width:35%;float:right" type="text">
+    </div>
+    <br><br>
+    <table class="table" id="myTable">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">Email</th>
+                <th scope="col">Cin</th>
+                <th scope="col">Entreprise</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set i=0 %}
+            {% for formateur in Formateurs %}
+                {% set i=i+1 %}
+                <tr>
+                    <th scope="row">{{ i }}</th>
+                    <td>{{ formateur.Nom }}</td>
+                    <td>{{ formateur.Prenom }}</td>
+                    <td>{{ formateur.Email }}</td>
+                    <td>{{ formateur.Cin }}</td>
+                    <td>{{ formateur.Entreprise }}</td>
+                    <td>
+                        <a href="{{ path('Supprimer_Formateur', {id : formateur.id}) }}">
+                            <span class="badge badge-pill badge-danger">Supprimer</span>
+                        </a>
+                        <a href="{{ path('editFormateur', {id : formateur.id}) }}">
+                            <span class="badge badge-pill badge-warning">Editer</span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form action="{{ path('Ajouter_formateur') }}">
+        <button class="btn btn-primary" style="float:right" type="submit">Ajouter formateur</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="{{ path('login') }}"><img src="{{ asset('image/logo.png') }}" hight="50px" width="50px">
+            <span style="color:#fff">Centre National D'informatique</span></a>
+            <button aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarColor01" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{{ path('login') }}"> Acceuil</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('Ajoutercontact') }}">Contact</a>
+                    </li>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">{{app.user.Nom}}</a>
+                            <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: -120px; will-change: transform;" x-placement="bottom-start">
+                                <a class="dropdown-item" href="{{ path('Listes_Formateurs') }}">gestion Formateur</a>
+                                <a class="dropdown-item" href="{{ path('admin') }}">gestion des utilisateurs</a>
+                                <a class="dropdown-item" href="{{ path('Lister_cycle') }}">gestion des formations</a>
+                                <a class="dropdown-item" href="{{ path('listesMessage') }}">gestion des Contact</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout">Déconexion</a>
+                            </div>
+                        </li>
+                    {% elseif is_granted("ROLE_USER") %}
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">{{app.user.Nom}}</a>
+                            <div class="dropdown-menu" style="position: absolute; transform: translate3d(0px, 38px, 0px); top: 0px; left: -120px; will-change: transform;" x-placement="bottom-start">
+                                <a class="dropdown-item" href="{{ path('listesMessage') }}">Messages</a>
+                                <a class="dropdown-item" href="{{ path('MesFormations') }}">Mes Formations</a>
+                                <a class="dropdown-item" href="{{ path('profil') }}">Formations</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout">Déconexion</a>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+<div class="container mt-4">
+
+        {% block body %}{% endblock %}
+</div>
+<footer class="footer-distributed">
+    <div class="footer-left">
+        <p class="footer-links">
+            <a href="../Application.php">Home</a>
+            ·
+            <a href="../contact.php">contact</a>
+            ·
+            <a href="#">About</a>
+        </p>
+        <p class="footer-company-name">CNI&copy; 2019</p>
+    </div>
+    <div class="footer-center">
+        <div>
+            <i class="fa fa-envelope"></i>
+            <p>
+                <a href="mailto:Cni@Cni.org<">CentreNationInfo@gmail.com</a>
+            </p>
+        </div>
+        <div>
+            <i class="fa fa-phone"></i>
+            <p>+216 71 951 044</p>
+        </div>
+    </div>
+    <div class="footer-right">
+        <div class="footer-icons">
+            <a href="#">
+                <i class="fa fa-facebook"></i>
+            </a>
+            <a href="#">
+                <i class="fa fa-twitter"></i>
+            </a>
+            <a href="#">
+                <i class="fa fa-linkedin"></i>
+            </a>
+            <a href="#">
+                <i class="fa fa-github"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+
+        {% block javascripts %}
+            <script src="{{ asset('js/jquery-3.3.1.slim.min.js') }}"></script>
+            <script src="{{ asset('js/popper.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('js/main.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

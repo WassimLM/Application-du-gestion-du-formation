@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ContactController!
+{% endblock %}
+
+{% block body %}
+    <h2 style="color:#001A33;">Message Réponse</h2>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Home</a>
+        </li>
+        <li class="breadcrumb-item">Contact</li>
+    </ol>
+    <br>
+    <div class="card text-white bg-primary mb-3">
+        <div class="card-header">{{ Message.user.Nom ~ " " ~ Message.user.Prenom }} </div>
+        <div class="card-body">
+            <p class="card-text">{{ Message.DemandeMessage }}</p>
+            <span style="float:right">le {{ Message.DateMessageDemande | date("d/m/y h:m:s") }}</span>
+        </div>
+    </div>
+        {{ form_start(formReponceMessage) }}
+        {{ form_row(formReponceMessage.ReponceMessage, {"attr" : {"placeholder" : "Ecrivez Votre Réponce Ici ..", "rows" : 5}, "label" : " "}) }}
+        <button class="btn btn-primary" type="submit">Envoyer</button>
+        {{ form_end(formReponceMessage) }}
+    <br><br>
+{% endblock %}

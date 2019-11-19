@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+<br>
+<h2 style="color:#001A33;">Liste des Utilisateurs</h2>
+{% if SuppAdmin is defined %}
+    {{ SuppAdmin }}
+{% endif %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    {% if ok %}
+        <li class="breadcrumb-item">Utilisateurs</li>
+    {% else %}
+        <li class="breadcrumb-item"><a href="{{ path('Lister_cycle') }}"> Formation</a></li>
+        <li class="breadcrumb-item">utilisateur Par formation</li>
+    {% endif %}
+</ol>
+<div class="form-group">
+    <input class="form-control" id="search" onkeyup="search(0)" placeholder="Rechercher par Cin" style="width:35%;float:right" type="text">
+</div>
+<br><br>
+<table class="table" id="myTable">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cin</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Role</th>
+            <th scope="col">email</th>
+            <th scope="col">Entreprise</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% set i=0 %}
+        {% for user in users %}
+            {% if user.id == app.user.id == false %}
+            {% set i=i+1 %}
+            <tr>
+                <th scope="row">{{ i }}</th>
+                <td>{{ user.Cin }}</td>
+                <td>{{ user.Nom }}</td>
+                <td>{{ user.Prenom }}</td>
+                <td>
+                    {% if user.roles==['ROLE_ADMIN'] %}
+                        Administrateur
+                    {% else %}
+                        Client
+                    {% endif %}
+                </td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.Entreprise}}</td>
+                <td>
+                    {% if user.roles==['ROLE_ADMIN'] %}
+                        <span class="badge badge-info">Tous les Actions Interdite pour cette Utilisateur</span>
+                    {% else %}
+                        <a href="{{ path('suppUser', {id : user.id}) }}">
+                            <span class="badge badge-pill badge-danger">Supprimer</span>
+                        </a>
+                        <a href="{{ path('ModifierUtilisateur', {id : user.id}) }}">
+                            <span class="badge badge-pill badge-warning">Editer</span>
+                        </a>
+                        {% if ok == true %}
+                            <a href="{{ path('cyclesPerUser', {id : user.id}) }}">
+                                <span class="badge badge-pill badge-success">Formations</span>
+                            </a>
+                        {% endif  %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<form action="{{ path('AjouterUtilisateur') }}">
+    <button type="submit" class="btn btn-primary" style="float:right">Ajouter Utilisateur</button>
+</form>
+<br><br>
+<div id="equilibre"><br></div>
+{% endblock %}
